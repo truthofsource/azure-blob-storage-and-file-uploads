@@ -1,0 +1,12 @@
+{
+  "name": "azure-storage-file-upload-reference",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.23.2"
+  },
+  "scripts": {
+    "test": "node --experimental-strip-types --test src/documents/documentAccess.test.ts src/stage2/stage2DocumentUploadRules.test.ts src/contracts/publicStage2DocumentUpload.test.ts",
+    "demo": "node --experimental-strip-types scripts/demo.mjs"
+  }
+}

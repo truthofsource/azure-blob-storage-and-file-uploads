@@ -1,0 +1,153 @@
+{
+  "description": "Actual source with fictional public labels. Original hashes precede adaptations. No private history or source records included.",
+  "files": [
+    {
+      "source": "infra/modules/storage/main.tf",
+      "sourceSha256": "d0945df67f544836bc5c9d6abcea6388be7de1f252cafe09c36b826eeaf2b78f",
+      "publicFile": "infra/storage/main.tf",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "infra/modules/storage/variables.tf",
+      "sourceSha256": "52d1dddacadab3aa3d18f83e00787198fb8bbf5349344e7972d435ffbaf9f4e4",
+      "publicFile": "infra/storage/variables.tf",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "infra/modules/storage/outputs.tf",
+      "sourceSha256": "33730afd3993b2dc8c66b7dd56a63d370aa916e5f37ef5b240b147ffa6efab4c",
+      "publicFile": "infra/storage/outputs.tf",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "infra/modules/storage/versions.tf",
+      "sourceSha256": "b88fcfef92a8571378d3376a6d7e2b7478df1fcaaecfcf56b8ec5e2c831a6118",
+      "publicFile": "infra/storage/versions.tf",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "infra/modules/storage/tests/network_policy.tftest.hcl",
+      "sourceSha256": "ce6c2d774263498d9b0026883fa2f4cc4366626ca1c4eaa19d2015fdce59e7ff",
+      "publicFile": "infra/storage/tests/network_policy.tftest.hcl",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution.",
+        "Added one public recovery/private-container/account-grant regression test after the four original cases."
+      ]
+    },
+    {
+      "source": "apps/api/src/documents/documentCatalog.ts",
+      "sourceSha256": "f21aa44f14914a375c0730f42cf7c94f83a9f5e3cc9a42057b93b98d0188bb64",
+      "publicFile": "src/documents/documentCatalog.ts",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "apps/api/src/documents/documentAccess.ts",
+      "sourceSha256": "95a69859ba9b8ec564c8be1e22211fd07468ab070db97c634133c3b4ba3b930d",
+      "publicFile": "src/documents/documentAccess.ts",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "apps/api/src/documents/documentAccess.test.ts",
+      "sourceSha256": "8f1c1292cef3f0948fe4d604b05541aca149f7682dd581992dbe67b9620f7c67",
+      "publicFile": "src/documents/documentAccess.test.ts",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "apps/api/src/documents/documentReadAudit.ts",
+      "sourceSha256": "b03938048ee8fdb0639d8a2e1af7f0af3a5d2010713ad946c373fef6dbf1aca1",
+      "publicFile": "src/documents/documentReadAudit.ts",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution.",
+        "Extracted pure validator; SQL writer remains in reference file."
+      ]
+    },
+    {
+      "source": "apps/api/src/documents/documentReadAudit.ts",
+      "sourceSha256": "b03938048ee8fdb0639d8a2e1af7f0af3a5d2010713ad946c373fef6dbf1aca1",
+      "publicFile": "reference/documentReadAudit.ts",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "apps/api/src/documents/documentUploadReceipt.ts",
+      "sourceSha256": "1bdc1abf48c9908331977efa39f75359e6be17bfd4fe15bc9ccb7d5034c37828",
+      "publicFile": "reference/documentUploadReceipt.ts",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "apps/api/src/functions/documents.ts",
+      "sourceSha256": "45b0c2e415005c2316c4f2f4bc727b5c69f223bd045af624bf40f7d027b6203d",
+      "publicFile": "reference/documents-route.ts",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution.",
+        "Renamed the local filename-normalization variable; behavior unchanged."
+      ]
+    },
+    {
+      "source": "apps/api/src/stage2/stage2DocumentUploadRules.ts",
+      "sourceSha256": "6208597f8828b7e5643647d8309b4a8a4a5a6a6cdea69fbcccac8c66254f1a89",
+      "publicFile": "src/stage2/stage2DocumentUploadRules.ts",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "apps/api/src/stage2/stage2DocumentUploadRules.test.ts",
+      "sourceSha256": "bd985d18b43141d053a7507bf7380adf5dfe08d6d890c8469b485ebdc8ea76d9",
+      "publicFile": "src/stage2/stage2DocumentUploadRules.test.ts",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "apps/api/src/contracts/publicStage2DocumentUpload.ts",
+      "sourceSha256": "7460f96b3f76da4cbe7fc480c40f6ccdb8a154234060ecaa751e461c4274ad16",
+      "publicFile": "src/contracts/publicStage2DocumentUpload.ts",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution.",
+        "Renamed the local filename-normalization variable; behavior unchanged."
+      ]
+    },
+    {
+      "source": "apps/api/src/contracts/publicStage2DocumentUpload.test.ts",
+      "sourceSha256": "7a91a579daafd59a382f298f891073ce56f7e26edd078afa3e4eee6ca62ac113",
+      "publicFile": "src/contracts/publicStage2DocumentUpload.test.ts",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "infra/platform/production/storage.tf",
+      "sourceSha256": "06be8cdb7acbd9ca0aead0580844225b8dcf43e9d7ab83a757761d97ffa02a52",
+      "publicFile": "reference/infra/production-storage.tf",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    },
+    {
+      "source": "infra/platform/production/document-private-endpoint.tf",
+      "sourceSha256": "d974b9d5ecb4b5e7ea18e4cdfb0bfaa9df49731acae9a26303d72e40a73968fb",
+      "publicFile": "reference/infra/document-private-endpoint.tf",
+      "adaptations": [
+        "Neutral organization and role labels; explicit .ts imports for Node execution."
+      ]
+    }
+  ]
+}
