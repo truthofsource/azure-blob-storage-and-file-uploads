@@ -16,7 +16,7 @@ Route application uploads into private Azure Blob Storage. Keep the file's owner
 
 **Business outcome:** A consistent document library reduces manual filing and gives staff clearer ownership, access boundaries and recovery options. No numerical time-saving claim is made.
 
-This project covers application uploads and storage management. **Email ingestion is a separate project.** Malware scanning is explained in depth in the [file quarantine project](https://github.com/truthofsource/secure-serverless-document-processing).
+This project covers application uploads and storage management. **[Email ingestion is a separate project](https://github.com/truthofsource/azure-logic-apps-document-ingestion).** Malware scanning is explained in depth in the [file quarantine project](https://github.com/truthofsource/secure-serverless-document-processing).
 
 ## Architecture
 
@@ -40,11 +40,11 @@ Intake and trusted documents can use separate storage accounts. The included Ter
 
 | Component | What it does | Code |
 | --- | --- | --- |
-| Actual storage module | Private containers, Entra access, network restrictions, versioning, 30-day deletion recovery and storage logs | [Terraform](infra/storage/main.tf) |
-| Actual upload validation | Checks request shape, file size, byte signatures and whether a packet item may be changed | [Contract](src/contracts/publicStage2DocumentUpload.ts), [rules](src/stage2/stage2DocumentUploadRules.ts) |
-| Actual document catalog | Chooses the collection from the document type | [Catalog](src/documents/documentCatalog.ts) |
-| Actual access rules | Separates HR, Payroll and Admin library access; rejects unknown roles | [Access](src/documents/documentAccess.ts) |
-| Actual route and receipt reference | Uses managed identity, conditional writes and matching actor/person/hash/size context for retries | [Route](reference/documents-route.ts), [receipt](reference/documentUploadReceipt.ts) |
+| Storage infrastructure | Private containers, Entra access, network restrictions, versioning, 30-day deletion recovery and storage logs | [Terraform](infra/storage/main.tf) |
+| Upload validation | Checks request shape, file size, byte signatures and whether a packet item may be changed | [Contract](src/contracts/publicStage2DocumentUpload.ts), [rules](src/stage2/stage2DocumentUploadRules.ts) |
+| Document filing rules | Chooses the collection from the document type | [Catalog](src/documents/documentCatalog.ts) |
+| Access rules | Separates HR, Payroll and Admin library access; rejects unknown roles | [Access](src/documents/documentAccess.ts) |
+| Upload handling and retry records | Uses managed identity and checks that retries match the same user, person, file contents and size | [Route](reference/documents-route.ts), [receipt](reference/documentUploadReceipt.ts) |
 | New local viewer | Explains the design and displays fictional requests evaluated by the real extracted rules | [Preview](preview/index.html) |
 
 ## Proof It Works
@@ -73,7 +73,7 @@ terraform -chdir=infra/storage test
 
 ![Fictional request decisions and upload stages](docs/images/02-upload-example.png)
 
-A valid upload request does not mean the file is safe to open. The full application waits for a check of the exact uploaded file version. A retry must match its saved receipt rather than creating a different document under the same request identity.
+A valid upload request does not mean the file is safe to open. The full application waits for a check of the exact uploaded file version. A retry must match the saved upload record. It cannot submit a different file as the same request.
 
 ### 4. Check who can see what
 
@@ -91,7 +91,7 @@ Open [the local reference](http://127.0.0.1:8140). Screenshots are real captures
 
 | Choice | Strength | Limit or tradeoff |
 | --- | --- | --- |
-| Private, keyless storage | Avoids anonymous files and shared account keys | Callers still need both a working private network path and valid identity permissions |
+| Restricted storage with managed identity | Avoids anonymous files and shared account keys | Callers still need network access allowed by the storage rules and valid identity permissions |
 | Server-controlled collections | Makes filing consistent | Shared containers still require document-level checks |
 | File-version receipts | Helps reconcile retries without accepting different content | SQL and Blob Storage are separate systems; recovery must handle partial work |
 | Versioning and soft deletion | Helps recover mistakes | Retained versions cost money and do not replace database or disaster recovery |
