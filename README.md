@@ -18,15 +18,28 @@ I used Azure Blob Storage to hold uploaded files, with application records that 
 
 In Azure, a storage account manages settings, a container groups files, and a blob is a stored file. The application database keeps the business information about those files.
 
+## Tools Used and What They Do
+
+| Tool or service | What it does | Where it fits |
+| --- | --- | --- |
+| Azure Blob Storage | Store private document bytes and supported retained versions. | Actual file store. |
+| Microsoft Entra ID and managed identities | Authenticate staff/services before their permitted operations. | Actual identity layer; data roles and record authorization remain separate. |
+| Azure Functions, Node.js and TypeScript | Validate uploads, document ownership and protected reads. | Actual application rules; only selected code is included. |
+| Defender for Storage, Event Grid and Storage Queues | Scan files and carry the resulting work to the processor. | Actual platform pipeline; the local example does not perform a cloud scan. |
+| Terraform | Describe storage and diagnostic settings. | Reference infrastructure with local validation, not a new live file service. |
+| Node test runner and Python | Exercise extracted rules and show a fictional file library. | Public validation and demonstration utilities. |
+
+Account visibility in Azure is different from permission to read a blob or the employee record that owns it. Manual GitHub Actions validation does not upload business files.
+
 ## Step by Step
 
 A short walkthrough of the process, with technical instructions and evidence limits in the sections below.
 
 1. **Check the upload request** — The application checks the user, document type and file details. It also confirms that the selected record may be changed.
 
-2. **Store the file and its details** — The new file goes into protected storage while the database records its owner and status. Saved upload details help distinguish a retry from a different file.
+2. **Store the file and its details (Blob Storage)** — The new file goes into protected storage while the database records its owner and status. Saved upload details help distinguish a retry from a different file.
 
-3. **Wait for the malware result** — A separate process checks the uploaded file for malware. An uncertain or unsuccessful check does not make the file available.
+3. **Wait for the malware result (Defender for Storage)** — A separate process checks the uploaded file for malware. An uncertain or unsuccessful check does not make the file available.
 
 4. **Open or recover the document** — The application checks access again before a preview or download. Retained file versions and deletion recovery support a separate recovery process after mistakes.
 
