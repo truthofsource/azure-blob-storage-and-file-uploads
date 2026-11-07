@@ -115,6 +115,10 @@ Open [the local reference](http://127.0.0.1:8140). Screenshots are real captures
 
 For more or larger uploads, measure file sizes, waiting work, scan times and retained storage. Increasing an upload limit alone is not a complete scaling plan. [Operations, recovery and growth](docs/OPERATIONS-AND-SCALING.md).
 
+## Troubleshooting Lessons
+
+Removing a visible report did not automatically clear retained blob versions. Exact ownership, version identity and soft-deletion boundaries had to be preserved during cleanup. [Read the incident, evidence and verification](docs/LESSONS-LEARNED.md).
+
 ## Project Guides
 
 | Guide | Purpose |
