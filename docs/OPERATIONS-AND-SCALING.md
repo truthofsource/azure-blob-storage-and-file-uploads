@@ -5,10 +5,10 @@
 | Symptom | What to check | What to avoid |
 | --- | --- | --- |
 | Upload rejected | File type, size, byte signature, item state and explicit route settings | Renaming an extension to bypass validation |
-| Save result is uncertain | Reload the receipt and match actor, person, hash and size before retrying | Creating a second document without checking the first |
+| Save result is uncertain | Reload the saved upload record and check the user, person, file hash and size before retrying | Creating a second document without checking the first |
 | File check stays pending | Scanner power, queue backlog, event correlation and exact object version | Setting a clean verdict manually |
 | Account visible but files unavailable | Private DNS, caller network path, data role and application authorization | Treating an ARM Reader role as file access |
-| Missing library result | Document type, owner link, archive status and caller role | Giving HR Payroll access to fix a search result |
+| Missing library result | Document type, owner link, archive status and caller role | Granting a broader role just to make a search return results |
 | Deleted file needed | Retained versions, soft-delete window and the matching SQL record | Restoring bytes without restoring ownership/status consistency |
 | No activity logs | Diagnostic category, workspace, table mode, delay and actual traffic | Assuming an empty query proves no activity |
 
@@ -30,7 +30,7 @@ Start by measuring request rate, upload size, queued work, processing time, fail
 
 Larger files can benefit from controlled block uploads or short-lived upload permissions, but only after designing ownership, expiry, finalization, scan correlation and abandoned-upload cleanup. Do not make a container public. A direct-upload design is a future option, not implemented by this demonstration.
 
-Scale API instances and scanner workers independently. Keep conditional writes, durable receipts and exact object-version matching across instances. Queues absorb bursts but do not eliminate backlogs. Add bounded concurrency and alerts before raising throughput.
+Scale API instances and scanner workers independently. Keep overwrite protection, persistent upload records and checks of the exact stored file across all instances. Queues absorb bursts but do not eliminate backlogs. Add bounded concurrency and alerts before raising throughput.
 
 Use additional accounts when network, ownership or workload isolation warrants them. Use containers to organize collections, not as a substitute for application authorization. The included account-scoped grants are broad; narrowing them requires a caller-by-caller review rather than an undocumented change to the copied module.
 

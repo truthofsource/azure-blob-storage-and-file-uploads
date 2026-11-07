@@ -12,7 +12,7 @@ The actual catalog routes `background_check` to `background-checks`, `payroll_pa
 2. The included upload contract validates allowed fields, base64 content, size, extension and supported byte signatures. A recognized file header is not a complete decoder or proof that a file is harmless.
 3. Packet rules check whether the packet and item may be changed. An accepted document cannot be silently replaced. HEIC/HEIF is allowed for government ID items, not every document item.
 4. The staff route uses `DefaultAzureCredential` and a managed identity in Azure. It conditionally creates an intake object with `ifNoneMatch: '*'`, which refuses an overwrite of an existing object.
-5. The route saves ownership and processing metadata in SQL. Its receipt checks document ID, person, actor, type, content hash and size. It also retains the intake ETag, Azure's object-version marker, for the scan process. The hash and ETag have different purposes; neither is a malware verdict.
+5. The route saves ownership and processing metadata in SQL. Its receipt checks document ID, person, actor, type, content hash and size. It also retains the intake ETag, Azure's change identifier for the blob, for the scan process. An ETag is separate from a Blob version ID. The content hash, ETag and version ID serve different purposes; none is a malware verdict.
 6. The separate scanner correlates the result with the expected object before releasing it. Pending or unknown states remain unavailable. See the dedicated malware project for the scanner implementation.
 7. Retrieval checks document access again. A private URL or container name alone does not prove the requester is authorized.
 
@@ -36,4 +36,4 @@ Managed identity authenticates the caller; it does not automatically create netw
 
 Versioning retains earlier blob versions. Soft deletion provides a 30-day recovery period for deleted blobs and containers in this module. These controls do not restore SQL references, application configuration, identities or a deleted storage account. Recovery must match a file to its database record and preserve its check status.
 
-References: [Blob Storage concepts](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction), [Entra authorization](https://learn.microsoft.com/en-us/azure/storage/blobs/authorize-access-azure-active-directory), [versioning](https://learn.microsoft.com/en-us/azure/storage/blobs/versioning-overview).
+References: [ETag conditions](https://learn.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations), [Blob Storage concepts](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction), [Entra authorization](https://learn.microsoft.com/en-us/azure/storage/blobs/authorize-access-azure-active-directory), [versioning](https://learn.microsoft.com/en-us/azure/storage/blobs/versioning-overview).
