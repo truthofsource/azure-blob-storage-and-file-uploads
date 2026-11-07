@@ -20,3 +20,15 @@ Four screenshots are included: [overview](images/01-overview.png), [upload examp
 No Azure account, private endpoint, SQL database, malware scanner, real applicant or signed-in application was exercised. No storage account was created and no live restore was performed. The screenshot viewer displays fictional data, and only the selected pure TypeScript rules run here. Header validation does not replace a full decoder or malware check.
 
 The reference route depends on the full application's authentication and storage/database components. It is included for inspection, not claimed to be a standalone API. Terraform mocks check proposed configuration; they do not prove live DNS, permissions or deployment reachability. The manual GitHub workflow is not dispatched for this project.
+
+## Plain-language review - November 7, 2026
+
+The main overview now starts with the business problem, the solution and the
+practical outcome. Technical commands and detailed results remain available in
+expandable sections and linked guides. Links, heading anchors, formatting and
+expandable sections were checked. Earlier code-test and cloud results remain
+historical; this wording pass did not repeat those tests.
+
+The fictional preview was also simplified, its screenshots refreshed, and its
+desktop tabs and 390-pixel mobile layout checked locally. Browser requests were
+restricted to the local preview; HTML structure and embedded scripts were unchanged.

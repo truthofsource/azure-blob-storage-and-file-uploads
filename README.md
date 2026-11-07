@@ -1,6 +1,6 @@
 # Azure Storage Accounts, Containers and File Uploads
 
-**Give business files a clear home, protect access and keep recovery options available.**
+**Keep business files organized, restrict who can open them and prepare for accidental changes or deletion.**
 
 [Business problem](#the-business-problem) · [Solution](#the-solution) · [What was built](#what-was-built) · [Proof](#proof-it-works) · [Commands](docs/COMMANDS.md)
 
@@ -8,46 +8,49 @@
 
 ## The Business Problem
 
-An employee uploads a document, but storing the bytes is only the beginning. Staff need to find the right file, know whose record it belongs to and avoid opening an unchecked or unauthorized copy. Accidental changes and deletions also need a recovery path.
+Uploading a file is only the start. Staff need to find it, know whose record it belongs to and avoid opening an unchecked or unauthorized copy. The organization also needs a way to recover files after mistakes.
 
 ## The Solution
 
-Route application uploads into private Azure Blob Storage. Keep the file's ownership, type and processing status in the application database. Check requests before accepting them, hold new files for malware checking and enforce access again when someone retrieves a document.
+I used Azure Blob Storage to hold uploaded files, with application records that identify their owner, type and processing status. New uploads wait for a malware check, and the application checks access again when someone opens or downloads a file.
 
-**Business outcome:** A consistent document library reduces manual filing and gives staff clearer ownership, access boundaries and recovery options. No numerical time-saving claim is made.
+**Business outcome:** Staff have a consistent document library, clearer access rules and recovery options for retained files. The project does not claim measured time savings.
 
-This project covers application uploads and storage management. **[Email ingestion is a separate project](https://github.com/truthofsource/azure-logic-apps-document-ingestion).** Malware scanning is explained in depth in the [file quarantine project](https://github.com/truthofsource/secure-serverless-document-processing).
+In Azure, a storage account manages settings, a container groups files, and a blob is a stored file. The application database keeps the business information about those files.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-  User[Applicant or authorized staff] --> API[API validates request and access]
-  API --> Intake[Private intake container]
-  API --> SQL[SQL ownership and upload receipt]
-  Intake --> Scan[Separate malware-check process]
-  Scan --> Trusted[Approved destination container]
-  Trusted --> Read[Protected retrieval API]
-  SQL --> Read
-  Read --> Viewer[Authorized viewer or download]
-  Intake -. Storage activity .-> Logs[Log Analytics]
-  Trusted -. Storage activity .-> Logs
+  Upload[Person uploads a file] --> Check[Check permission and file details]
+  Check --> Hold[Hold the new file privately]
+  Check --> Record[Record its owner and status]
+  Hold --> Scan[Run the separate malware check]
+  Scan --> Store[Keep the eligible document]
+  Store --> Access[Check permission before opening]
+  Record --> Access
 ```
-
-Intake and trusted documents can use separate storage accounts. The included Terraform module defines the document store; it does not provision the entire API, database or scanner. The diagram explains their relationship, not a complete deployment from this repository.
 
 ## What Was Built
 
-| Component | What it does | Code |
+| Part | What it does | Details |
 | --- | --- | --- |
-| Storage infrastructure | Private containers, Entra access, network restrictions, versioning, 30-day deletion recovery and storage logs | [Terraform](infra/storage/main.tf) |
-| Upload validation | Checks request shape, file size, byte signatures and whether a packet item may be changed | [Contract](src/contracts/publicStage2DocumentUpload.ts), [rules](src/stage2/stage2DocumentUploadRules.ts) |
-| Document filing rules | Chooses the collection from the document type | [Catalog](src/documents/documentCatalog.ts) |
-| Access rules | Separates HR, Payroll and Admin library access; rejects unknown roles | [Access](src/documents/documentAccess.ts) |
-| Upload handling and retry records | Uses managed identity and checks that retries match the same user, person, file contents and size | [Route](reference/documents-route.ts), [receipt](reference/documentUploadReceipt.ts) |
-| New local viewer | Explains the design and displays fictional requests evaluated by the real extracted rules | [Preview](preview/index.html) |
+| File storage | Groups files privately and records earlier versions for recovery. | [Storage setup](infra/storage/main.tf) |
+| Upload checks | Checks size, file type and whether the selected record may be changed. | [Upload rules](src/contracts/publicStage2DocumentUpload.ts) |
+| Filing rules | Chooses a collection based on the document type. | [Document catalog](src/documents/documentCatalog.ts) |
+| Access checks | Separates HR, Payroll and Admin document access. | [Permission rules](src/documents/documentAccess.ts) |
+| Retry records | Checks whether a repeated request is the same upload or different content. | [Upload records](reference/documentUploadReceipt.ts) |
+
+This project covers application uploads. [Email ingestion](https://github.com/truthofsource/azure-logic-apps-document-ingestion) and [malware scanning](https://github.com/truthofsource/secure-serverless-document-processing) have separate case studies.
 
 ## Proof It Works
+
+**34 recorded application-rule tests passed**, covering accepted and rejected uploads, role restrictions and protected records. **Five infrastructure test cases** also passed using simulated Azure responses.
+
+The screenshots show fictional documents in a local demonstration. These checks did not deploy a complete file-storage service or repeat live recovery. [What was checked](docs/VALIDATION.md).
+
+<details>
+<summary>For engineers: detailed results, examples and commands</summary>
 
 ### 1. Check actual application rules
 
@@ -87,15 +90,18 @@ python -B scripts/preview.py --port 8140
 
 Open [the local reference](http://127.0.0.1:8140). Screenshots are real captures of this local demonstration with fictional data, not Azure Portal or live application evidence.
 
+</details>
+
 ## Strengths, Weaknesses and Tradeoffs
 
-| Choice | Strength | Limit or tradeoff |
-| --- | --- | --- |
-| Restricted storage with managed identity | Avoids anonymous files and shared account keys | Callers still need network access allowed by the storage rules and valid identity permissions |
-| Server-controlled collections | Makes filing consistent | Shared containers still require document-level checks |
-| File-version receipts | Helps reconcile retries without accepting different content | SQL and Blob Storage are separate systems; recovery must handle partial work |
-| Versioning and soft deletion | Helps recover mistakes | Retained versions cost money and do not replace database or disaster recovery |
-| Storage and business audit logs | Explains technical activity and business access | Log volume, retention and sensitive metadata need review |
+| Benefit | What it does not solve by itself |
+| --- | --- |
+| Consistent filing by document type | Each document still needs the correct owner and access checks. |
+| Saved upload records | The file store and business database still need to agree after a partial failure. |
+| Earlier versions and deletion recovery | Recovery is limited by retention settings and does not restore the whole application. |
+| Activity records | Logs need appropriate access, retention and cost controls. |
+
+For more or larger uploads, measure file sizes, waiting work, scan times and retained storage. Increasing an upload limit alone is not a complete scaling plan. [Operations, recovery and growth](docs/OPERATIONS-AND-SCALING.md).
 
 ## Project Guides
 
