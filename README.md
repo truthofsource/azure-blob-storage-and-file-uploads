@@ -2,7 +2,7 @@
 
 **Keep business files organized, restrict who can open them and prepare for accidental changes or deletion.**
 
-[Business problem](#the-business-problem) · [Solution](#the-solution) · [What was built](#what-was-built) · [Proof](#proof-it-works) · [Commands](docs/COMMANDS.md)
+[Business problem](#the-business-problem) · [Solution](#the-solution) · [What was built](#what-was-built) · [Proof](#proof-it-works) · [Commands](docs/COMMANDS.md) · [Step by step](#step-by-step)
 
 ![Storage project overview, captured from the local reference](docs/images/01-overview.png)
 
@@ -17,6 +17,18 @@ I used Azure Blob Storage to hold uploaded files, with application records that 
 **Business outcome:** Staff have a consistent document library, clearer access rules and recovery options for retained files. The project does not claim measured time savings.
 
 In Azure, a storage account manages settings, a container groups files, and a blob is a stored file. The application database keeps the business information about those files.
+
+## Step by Step
+
+A short walkthrough of the process, with technical instructions and evidence limits in the sections below.
+
+1. **Check the upload request** — The application checks the user, document type and file details. It also confirms that the selected record may be changed.
+
+2. **Store the file and its details** — The new file goes into protected storage while the database records its owner and status. Saved upload details help distinguish a retry from a different file.
+
+3. **Wait for the malware result** — A separate process checks the uploaded file for malware. An uncertain or unsuccessful check does not make the file available.
+
+4. **Open or recover the document** — The application checks access again before a preview or download. Retained file versions and deletion recovery support a separate recovery process after mistakes.
 
 ## Architecture
 
