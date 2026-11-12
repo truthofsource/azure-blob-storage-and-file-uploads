@@ -8,7 +8,11 @@
 
 ## The Business Problem
 
-Uploading a file is only the start. Staff need to find it, know whose record it belongs to and avoid opening an unchecked or unauthorized copy. The organization also needs a way to recover files after mistakes.
+HR and operations staff need to upload, find and retrieve employee and business documents from one application. A file left in storage with only a technical filename gives little context about its owner, document type or purpose. A document list becomes difficult to trust if those links are inconsistent.
+
+Uploads can be interrupted or repeated, files can be replaced and accidental deletion can affect records used later for review. Access must follow the person and business record, including when the user requests a direct preview or download. A newly stored file also needs a visible processing status while its malware check is pending.
+
+The business need was an organized document library backed by consistent ownership, controlled upload and download paths and defined retention and recovery behavior.
 
 ## The Solution
 
