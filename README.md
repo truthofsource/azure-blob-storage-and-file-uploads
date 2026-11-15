@@ -212,7 +212,7 @@ This project covers application uploads. [Email ingestion](https://github.com/tr
 
 **34 recorded application-rule tests passed**, covering accepted and rejected uploads, role restrictions and protected records. **Five infrastructure test cases** also passed using simulated Azure responses.
 
-The screenshots show fictional documents in a local demonstration. These checks did not deploy a complete file-storage service or repeat live recovery. [What was checked](docs/VALIDATION.md).
+The local demonstration uses fictional documents; its placeholder captures have been removed. These checks did not deploy a complete file-storage service or repeat live recovery. [What was checked](docs/VALIDATION.md).
 
 <details>
 <summary>For engineers: detailed results, examples and commands</summary>
@@ -249,7 +249,7 @@ The library filters by document type, even when types share a container. These A
 python -B scripts/preview.py --port 8140
 ```
 
-Open [the local reference](http://127.0.0.1:8140). Screenshots are real captures of this local demonstration with fictional data, not Azure Portal or live application evidence.
+Open [the local reference](http://127.0.0.1:8140). Proper Azure and application screenshots are deferred; the local demonstration uses fictional data.
 
 </details>
 
