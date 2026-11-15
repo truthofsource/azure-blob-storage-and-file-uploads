@@ -1,10 +1,12 @@
 # Azure Storage Accounts, Containers and File Uploads
 
+[![Blob storage and file uploads — illustrated overview](docs/diagrams/architecture.png)](docs/diagrams/architecture.svg)
+
+[View SVG](docs/diagrams/architecture.svg) · [Download PNG](docs/diagrams/architecture.png) · [Edit in draw.io](docs/diagrams/architecture.drawio)
+
 **Keep business files organized, restrict who can open them and prepare for accidental changes or deletion.**
 
 [Business problem](#the-business-problem) · [Solution](#the-solution) · [What was built](#what-was-built) · [Proof](#proof-it-works) · [Commands](docs/COMMANDS.md) · [Step by step](#step-by-step)
-
-![Storage project overview, captured from the local reference](docs/images/01-overview.png)
 
 ## The Business Problem
 
@@ -157,7 +159,7 @@ Delete only the test blob, recover it through the selected soft-delete/version i
 | Failure boundary | A meaningful denied, malformed, stale or failed case | Not yet recorded |
 | Recovery / cleanup | What you restored or removed and what remains billed | Not yet recorded |
 
-Capture your own architecture/configuration, one working result and one failure/recovery result. Keep tokens, credentials, personal records and private identifiers out of public screenshots. Existing portfolio images are references, not evidence that you performed these steps.
+Capture your own architecture/configuration, one working result and one failure/recovery result. Keep tokens, credentials, personal records and private identifiers out of public screenshots. The architecture diagram explains the design; record your own results rather than treating it as execution evidence.
 
 ### Troubleshooting order
 
@@ -192,16 +194,7 @@ A short walkthrough of the process, with technical instructions and evidence lim
 
 ## Architecture
 
-```mermaid
-flowchart LR
-  Upload[Person uploads a file] --> Check[Check permission and file details]
-  Check --> Hold[Hold the new file privately]
-  Check --> Record[Record its owner and status]
-  Hold --> Scan[Run the separate malware check]
-  Scan --> Store[Keep the eligible document]
-  Store --> Access[Check permission before opening]
-  Record --> Access
-```
+[View the illustrated project overview](docs/diagrams/architecture.svg).
 
 ## What Was Built
 
@@ -246,13 +239,9 @@ terraform -chdir=infra/storage test
 
 ### 3. Follow an upload
 
-![Fictional request decisions and upload stages](docs/images/02-upload-example.png)
-
 A valid upload request does not mean the file is safe to open. The full application waits for a check of the exact uploaded file version. A retry must match the saved upload record. It cannot submit a different file as the same request.
 
 ### 4. Check who can see what
-
-![Role-based document access and recovery settings](docs/images/03-access-and-recovery.png)
 
 The library filters by document type, even when types share a container. These API rules do not reduce the separate permissions of someone granted direct storage access.
 

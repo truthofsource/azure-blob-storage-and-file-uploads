@@ -1,5 +1,7 @@
 # Validation and Evidence Limits
 
+> Placeholder screenshots were removed on November 15, 2026. Written test results below retain their original dates and scope; historical screenshot references describe earlier captures. Proper Azure and application screenshots are deferred. The illustrated architecture is a source-based explanation, not a live-service screenshot.
+
 Local checks completed November 6, 2026, before publication.
 
 | Check | Observed result | Limit |
@@ -13,7 +15,7 @@ Local checks completed November 6, 2026, before publication.
 | Public content | Relative links, source labels and code fences checked; Trivy secret scan found no secrets | Secret detection is not a vulnerability or privacy guarantee |
 | Workflow | Actionlint passed; manual trigger only | Not dispatched; no hosted Actions minutes used |
 
-Four screenshots are included: [overview](images/01-overview.png), [upload example](images/02-upload-example.png), [access and recovery](images/03-access-and-recovery.png), and [mobile](images/04-mobile.png).
+Four screenshots are included: overview, upload example, access and recovery, and mobile.
 
 ## What these checks do not prove
 
