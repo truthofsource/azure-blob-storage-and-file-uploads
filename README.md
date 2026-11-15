@@ -37,6 +37,19 @@ Account visibility in Azure is different from permission to read a blob or the e
 
 ## Step by Step
 
+Build an independent version with the [reader-operated walkthrough](docs/BUILD-YOUR-OWN.md). It gives prerequisites, working locations, numbered actions, source-derived commands, expected results, verification and cleanup.
+
+For this project, your working starting point is [`src/documents/documentAccess.ts`](src/documents/documentAccess.ts). Expected scope: Allowed and blocked upload/document decisions; no real uploaded file.
+
+1. **Create your own workspace.** Copy the project and record the source version before editing.
+2. **Prepare and run the baseline.** Use the documented runtimes and selected dependencies, then run the local checks.
+3. **Make your own change.** Edit a project-specific fixture, configuration or rule and rerun its positive and negative cases.
+4. **Verify and document your result.** Capture your own evidence and distinguish a local example from a live integration.
+5. **Extend and close out deliberately.** Plan any independent cloud work separately and clean up only what you created.
+
+<details>
+<summary>How the underlying platform process works</summary>
+
 A short walkthrough of the process, with technical instructions and evidence limits in the sections below.
 
 1. **Check the upload request** — The application checks the user, document type and file details. It also confirms that the selected record may be changed.
@@ -46,6 +59,8 @@ A short walkthrough of the process, with technical instructions and evidence lim
 3. **Wait for the malware result (Defender for Storage)** — A separate process checks the uploaded file for malware. An uncertain or unsuccessful check does not make the file available.
 
 4. **Open or recover the document** — The application checks access again before a preview or download. Retained file versions and deletion recovery support a separate recovery process after mistakes.
+
+</details>
 
 ## Architecture
 
