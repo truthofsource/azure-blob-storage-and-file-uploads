@@ -37,7 +37,7 @@ Account visibility in Azure is different from permission to read a blob or the e
 
 ## Step by Step
 
-Build an independent version with the [reader-operated walkthrough](docs/BUILD-YOUR-OWN.md). It gives prerequisites, working locations, numbered actions, source-derived commands, expected results, verification and cleanup.
+Build an independent version with the [step-by-step build guide](docs/BUILD-YOUR-OWN.md). It gives prerequisites, working locations, numbered actions, source-derived commands, expected results, verification and cleanup.
 
 For this project, your working starting point is [`src/documents/documentAccess.ts`](src/documents/documentAccess.ts). Expected scope: Allowed and blocked upload/document decisions; no real uploaded file.
 
